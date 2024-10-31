@@ -1,0 +1,12 @@
+
+.tasksList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.task {
+  display: flex;
+}
+.taskName {
+  flex-grow: 1;
+}
