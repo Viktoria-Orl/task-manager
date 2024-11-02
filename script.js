@@ -15,27 +15,12 @@ const monthName = {
     9: 'october',
     10: 'november',
     11: 'december',
-}
+};
 
 dateHeading.innerText += `Plan for ${date.getDate()} ${monthName[date.getMonth()]}`;
 
-const list = [
-  {
-    id: 1,
-    taskName: 'Медитация',
-    completed: false,
-  },
-  {
-    id: 2,
-    taskName: 'Почитать книгу',
-    completed: false,
-  },
-  {
-    id: 3,
-    taskName: 'Почистить зубы',
-    completed: false,
-  },
-];
+const list = JSON.parse(localStorage.getItem("list")) || [];
+
 const taskWidget = document.querySelector(".taskWidget");
 
 const tasksList = document.createElement('ul');
@@ -75,8 +60,10 @@ function renderList() {
 
   // актуализация виджета
 
-  taskWidget.innerText = `${countCompletedTasks}/${countTasks} ${countCompletedTasks > 1 ? "tasks" : "task"} completed today`
-};
+  taskWidget.innerText = `${countCompletedTasks}/${countTasks} ${countCompletedTasks > 1 ? "tasks" : "task"} completed today`;
+
+  localStorage.setItem("list", JSON.stringify(list));
+}
 
 renderList();
 
@@ -98,10 +85,10 @@ function addItem() {
     );
     inputAddTask.value = '';
     renderList();
-  } else {alert('Empty task!')};
-};
+  } else {alert('Empty task!');}
+}
 
-buttonAddTask.addEventListener('click', addItem)
+buttonAddTask.addEventListener('click', addItem);
 
 //удаление задач
 
