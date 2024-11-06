@@ -1,4 +1,3 @@
-
 .tasksList {
   list-style-type: none;
   display: flex;
@@ -8,5 +7,24 @@
   display: flex;
 }
 .taskName {
-  flex-grow: 1;
+  width: 80%;
+}
+.completed {
+  text-decoration: line-through;
+  color: grey;
+}
+.container {
+  display: flex;
+}
+.taskAdding {
+  width: 80%;
+}
+.inputAddTask {
+  width: 80%;
+}
+.taskWidget {
+  width: 15%;
+  background-color: rgb(240, 240, 240);
+  border-radius: 2px;
+  text-align: center;
 }
