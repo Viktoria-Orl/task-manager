@@ -19,7 +19,14 @@ const monthName = {
 
 dateHeading.innerText += `Plan for ${date.getDate()} ${monthName[date.getMonth()]}`;
 
-const list = JSON.parse(localStorage.getItem("list")) || [];
+let list;
+
+try {
+  list = JSON.parse(localStorage.getItem("list")) || [];
+} catch (error) {
+  console.log("Error parsing data from localStorage:", error.message);
+  list = [];
+}
 
 const taskWidget = document.querySelector(".taskWidget");
 
@@ -48,7 +55,7 @@ function renderList() {
     button.addEventListener('click', deleteItem);
   });
 
-  // обработчик изменения статуса выполнения задаяи
+  // обработчик изменения статуса выполнения задачи
 
   tasksList.querySelectorAll('.checkboxInput').forEach(element => element.addEventListener('change', completedToggle));
 
