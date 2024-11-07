@@ -1,6 +1,6 @@
 let dateHeading = document.getElementById("dateHeading");
 
-let date = new Date();
+let today = new Date();
 
 const monthName = {
   0: "january",
@@ -17,9 +17,11 @@ const monthName = {
   11: "december",
 };
 
-dateHeading.innerText += `Plan for ${date.getDate()} ${
-  monthName[date.getMonth()]
+dateHeading.innerText += `Plan for ${today.getDate()} ${
+  monthName[today.getMonth()]
 }`;
+
+let todayDate = today.toLocaleDateString();
 
 let list;
 
@@ -37,21 +39,24 @@ const tasksList = document.createElement("ul");
 function renderList() {
   tasksList.innerHTML = "";
 
-  list.forEach((element) => {
-    tasksList.insertAdjacentHTML(
-      "beforeend",
-      `
-        <li class="task">
-          <label class="taskName ${element.completed ? "completed" : ""}">
-            <input type="checkbox" class="checkboxInput" ${
-              element.completed ? "checked" : ""
-            }>
-          ${element.taskName}
-          </label>
-          <button class="buttonDeleteTask" id="${element.id}">🗑️</button>
-        </li>
-      `
-    );
+  list.forEach((listItem) => {
+    //проверка на наличие свостйва isDeleted: true
+    if (!listItem.isDeleted) {
+      tasksList.insertAdjacentHTML(
+        "beforeend",
+        `
+          <li class="task">
+            <label class="taskName ${listItem.completed ? "completed" : ""}">
+              <input type="checkbox" class="checkboxInput" ${
+                listItem.completed ? "checked" : ""
+              }>
+            ${listItem.taskName}
+            </label>
+            <button class="buttonDeleteTask" id="${listItem.id}">🗑️</button>
+          </li>
+        `
+      );
+    }
   });
 
   //обработчик удаления на каждую вновь созданную кнопку delete
@@ -92,13 +97,33 @@ const inputAddTask = document.querySelector(".inputAddTask");
 const buttonAddTask = document.querySelector(".buttonAddTask");
 
 function addItem() {
-  const newId = list.length ? list[list.length - 1].id + 1 : 1;
-  if (inputAddTask.value) {
-    list.push({ id: newId, taskName: inputAddTask.value, completed: false });
+  const newTaskName = inputAddTask.value.trim();
+
+  if (!newTaskName) {
+    return alert("Empty task!");
+  }
+
+  const existTask = list.find(task => task.taskName.toLowerCase() === newTaskName.toLowerCase());
+
+  if (existTask) {
+    if (existTask.isDeleted) {
+      delete existTask.isDeleted;
+      inputAddTask.value = "";
+      renderList();
+    } else {
+      inputAddTask.value = "";
+      return alert("This task already exists! Enter a new one.");
+    }
+  } else {
+    const newId = list.length ? list[list.length - 1].id + 1 : 1;
+    list.push({
+      id: newId,
+      taskName: newTaskName,
+      completed: false,
+      completedDates: []
+    });
     inputAddTask.value = "";
     renderList();
-  } else {
-    alert("Empty task!");
   }
 }
 
@@ -110,8 +135,7 @@ function deleteItem(event) {
   const idDeletedTask = list.findIndex(
     (task) => task.id === Number(event.target.id)
   );
-  list.splice(idDeletedTask, 1);
-
+  list[idDeletedTask].isDeleted = true;
   renderList();
 }
 
@@ -126,6 +150,14 @@ function completedToggle(event) {
 
   task.completed = checkbox.checked;
   checkbox.parentElement.classList.toggle("completed", checkbox.checked);
+  
+  if (!task.completedDates.includes(todayDate)) {
+    task.completedDates.push(todayDate);
+  } else {
+    task.completedDates = task.completedDates.filter(
+      (date) => date !== todayDate
+    );
+  }
 
   renderList();
 }
