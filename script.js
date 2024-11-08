@@ -174,7 +174,7 @@ function completedToggle(event) {
 function renderWeekProgressWidget() {
   weekProgressTable.innerHTML = "";
 
-  if (!list.length === 0) return;
+  if (!list.some(task => !task.isDeleted)) return;
 
   // шапка таблицы с датами
 
