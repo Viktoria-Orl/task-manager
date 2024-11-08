@@ -34,6 +34,9 @@ try {
 
 const taskWidget = document.querySelector(".taskWidget");
 
+const weekProgressWidget = document.querySelector(".weekProgressWidget");
+const weekProgressTable = document.createElement("table");
+
 const tasksList = document.createElement("ul");
 
 function renderList() {
@@ -84,6 +87,8 @@ function renderList() {
     countCompletedTasks > 1 ? "tasks" : "task"
   } completed today`;
 
+  renderWeekProgressWidget();
+
   localStorage.setItem("list", JSON.stringify(list));
 }
 
@@ -103,7 +108,9 @@ function addItem() {
     return alert("Empty task!");
   }
 
-  const existTask = list.find(task => task.taskName.toLowerCase() === newTaskName.toLowerCase());
+  const existTask = list.find(
+    (task) => task.taskName.toLowerCase() === newTaskName.toLowerCase()
+  );
 
   if (existTask) {
     if (existTask.isDeleted) {
@@ -120,7 +127,7 @@ function addItem() {
       id: newId,
       taskName: newTaskName,
       completed: false,
-      completedDates: []
+      completedDates: [],
     });
     inputAddTask.value = "";
     renderList();
@@ -150,7 +157,7 @@ function completedToggle(event) {
 
   task.completed = checkbox.checked;
   checkbox.parentElement.classList.toggle("completed", checkbox.checked);
-  
+
   if (!task.completedDates.includes(todayDate)) {
     task.completedDates.push(todayDate);
   } else {
@@ -161,3 +168,75 @@ function completedToggle(event) {
 
   renderList();
 }
+
+//виджет прогресса за неделю
+
+function renderWeekProgressWidget() {
+  weekProgressTable.innerHTML = "";
+
+  if (!list.length === 0) return;
+
+  // шапка таблицы с датами
+
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+
+  // первый столбец для Task name
+
+  const taskNameHeader = document.createElement("th");
+  taskNameHeader.innerText = "Task name";
+  headerRow.append(taskNameHeader);
+
+  //след столбцы для дат
+
+  for (let i = 6; i >= 0; i--) {
+    const dateHeader = document.createElement("th");
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    dateHeader.innerText = date.toLocaleDateString(undefined, {
+      month: "numeric",
+      day: "numeric",
+    });
+    headerRow.append(dateHeader);
+  }
+
+  thead.append(headerRow);
+  weekProgressTable.append(thead);
+
+  // тело таблицы
+
+  const tbody = document.createElement("tbody");
+
+  list.forEach((listItem) => {
+    //проверка на наличие свостйва isDeleted: true
+    if (!listItem.isDeleted) {
+      const taskRow = document.createElement("tr");
+
+      // первый столбец для Task name
+
+      const taskNameCell = document.createElement("th");
+      taskNameCell.innerText = listItem.taskName;
+      taskRow.append(taskNameCell);
+
+      //след столбцы для дат
+
+      for (let i = 6; i >= 0; i--) {
+        const dateCell = document.createElement("td");
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        dateCell.innerText = listItem.completedDates.includes(
+          date.toLocaleDateString()
+        )
+          ? "✅"
+          : "❌";
+        taskRow.append(dateCell);
+      }
+
+      tbody.append(taskRow);
+    }
+  });
+  weekProgressTable.append(tbody);
+}
+
+renderWeekProgressWidget();
+weekProgressWidget.append(weekProgressTable);
