@@ -42,17 +42,25 @@ const tasksList = document.createElement("ul");
 function renderList() {
   tasksList.innerHTML = "";
 
+  // cчетчики для виджета выполненных задач
+
+  let countTasks = 0;
+  let countCompletedTasks = 0;
+  
   list.forEach((listItem) => {
     //проверка на наличие свостйва isDeleted: true
     if (!listItem.isDeleted) {
+
+      countTasks++; // считаю кол-во общих задач
+      const isCompletedToday = listItem.completedDates.includes(todayDate); // проверка выполнения сегодня
+      if (isCompletedToday) countCompletedTasks++; // если выполнено то увеличиваю
+
       tasksList.insertAdjacentHTML(
         "beforeend",
         `
           <li class="task">
-            <label class="taskName ${listItem.completed ? "completed" : ""}">
-              <input type="checkbox" class="checkboxInput" ${
-                listItem.completed ? "checked" : ""
-              }>
+            <label class="taskName ${isCompletedToday ? "completed" : ""}">
+              <input type="checkbox" class="checkboxInput" ${isCompletedToday ? "checked" : ""}>
             ${listItem.taskName}
             </label>
             <button class="buttonDeleteTask" id="${listItem.id}">🗑️</button>
@@ -73,13 +81,6 @@ function renderList() {
   tasksList
     .querySelectorAll(".checkboxInput")
     .forEach((element) => element.addEventListener("change", completedToggle));
-
-  // cчетчики для виджета выполненных задач
-
-  const countTasks = document.getElementsByClassName("taskName").length;
-
-  const countCompletedTasks =
-    document.getElementsByClassName("completed").length;
 
   // актуализация виджета
 
@@ -126,7 +127,6 @@ function addItem() {
     list.push({
       id: newId,
       taskName: newTaskName,
-      completed: false,
       completedDates: [],
     });
     inputAddTask.value = "";
@@ -134,6 +134,7 @@ function addItem() {
   }
 }
 
+inputAddTask.addEventListener("keydown", (event) => { if (event.key === 'Enter') addItem()});
 buttonAddTask.addEventListener("click", addItem);
 
 //удаление задач
@@ -155,7 +156,7 @@ function completedToggle(event) {
 
   const task = list.find((task) => task.id === id);
 
-  task.completed = checkbox.checked;
+
   checkbox.parentElement.classList.toggle("completed", checkbox.checked);
 
   if (!task.completedDates.includes(todayDate)) {
