@@ -1,37 +1,299 @@
-.tasksList {
-  list-style-type: none;
+body {
+  background: #d9d9d9;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --font-family: "Inter", sans-serif;
+  --second-family: "Nunito", sans-serif;
+  --third-family: "Rubik", sans-serif;
+}
+
+.nav-container {
+  position: relative;
+}
+
+.nav-menu {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(-50%, 0);
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 45px;
+  border-radius: 20px;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.25);
+  width: 250px;
+  height: 80px;
+  background: #fff;
 }
-.task {
-  display: flex;
+
+.nav-menu > button {
+  border-radius: 20px;
+  width: 65px;
+  height: 65px;
+  background: #3c3c3c;
 }
-.taskName {
-  width: 80%;
-}
-.completed {
-  text-decoration: line-through;
-  color: grey;
+.dateHeading {
+  margin-top: 40px;
+  margin-left: 45px;
+  margin-bottom: 25px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 36px;
+  color: #000;
 }
 .container {
   display: flex;
+  width: 100%;
+  gap: 40px;
+  margin-left: 45px;
+}
+.tasksContainer {
+  background: #fff;
+  border-radius: 20px;
+  width: 750px;
+  padding: 40px 35px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  color: #000;
+}
+.tasksContainer > ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+}
+.taskItem {
+  display: flex;
+  cursor: pointer;
+  padding-bottom: 10px;
+}
+.taskName {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  color: #000;
+  gap: 15px;
+  cursor: pointer;
+}
+.checkboxInput {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #b3b3b3;
+  border-radius: 100%;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+.checkboxInput:hover {
+  border: 1px solid #333;
+}
+.checkboxInput:checked {
+  background: #333;
+}
+.checkboxInput:checked::after {
+  content: '✔';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 150%;
+  text-align: center;
+  color: #fff;
+}
+.completed {
+  text-decoration: line-through;
+  color: #b3b3b3;
+}
+.buttonDeleteTask {
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  background: #fff;
+  cursor: pointer;
+}
+.buttonDeleteTask:hover {
+  border: 1px solid  #686868;
+}
+.rightContainer {
+  width: 600px;
+  flex-shrink: 1;
 }
 .taskAdding {
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px 16px;
+  border: 0px;
+  margin-bottom: 34px;
 }
 .inputAddTask {
-  width: 80%;
+  border-radius: 20px;
+  width: 565px;
+  height: 60px;
+  background: #e9e7e7;
+  padding: 15px 20px;
+  border: none;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.49);
+  margin-bottom: 18px;
+}
+.buttonAddTask {
+  border-radius: 20px;
+  width: 565px;
+  height: 60px;
+  border: none;
+  background: #c3c3c3;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  color: #000;
 }
 .taskWidget {
-  width: 15%;
-  background-color: rgb(240, 240, 240);
-  border-radius: 2px;
-  text-align: center;
+  width: 600px; 
+  height: 190px; 
+  border-radius: 20px;
+  background: url('data:image/svg+xml,%3Csvg%20width%3D%22600%22%20height%3D%22190%22%20viewBox%3D%220%200%20600%20190%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22599.372%22%20height%3D%22190%22%20rx%3D%227%22%20fill%3D%22%23686868%22%20%2F%3E%3Cpath%20d%3D%22M375.2%2086.4372C623.33%2086.4372%20599.372%2006%20599.372%2006V183C599.372%20186.866%20596.238%20190%20592.372%20190H86C86%20190%20127.07%2086.4372%20375.2%2086.4372Z%22%20fill%3D%22%23414141%22%20fill-opacity%3D%220.59%22%20%2F%3E%3Cpath%20d%3D%22M291.124%2055.291C539.435%2055.291%20599.372%2006.03174%20599.372%2006.03174V183C599.372%20186.866%20596.238%20190%20592.372%20190H85.6246C85.6246%20190%20042.8123%2055.291%20291.124%2055.291Z%22%20fill%3D%22%23797979%22%20fill-opacity%3D%220.59%22%20%2F%3E%3C%2Fsvg%3E');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  color: #fff;
+  display: flex;
+  gap: 40px;
+  padding-left: 50px;
 }
-.weekProgressWidget table,
+
+@property --x {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 100;
+}
+@property --y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+.tasksCompletedProgress {
+  width: 130px;
+  height: 130px;
+  appearance: none;
+  position: relative;
+  animation: y 2s 0.5s both;
+  timeline-scope: --progress;
+  align-self: center;
+}
+.tasksCompletedProgress::-webkit-progress-bar {
+  overflow: auto;
+  visibility: hidden;
+}
+.tasksCompletedProgress::-webkit-progress-value {
+  view-timeline: --progress inline;
+}
+.tasksCompletedProgress::before,
+.tasksCompletedProgress::after {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: x linear;
+  animation-timeline: --progress;
+  animation-range: entry 100% exit 100%;
+}
+.tasksCompletedProgress::before {
+  content: counter(val) "%";
+  counter-reset: val calc(var(--y) * var(--x));
+  display: grid;
+  place-content: center;
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 21px;
+  color: #fff;
+}
+.tasksCompletedProgress::after {
+  content: "";
+  background: conic-gradient(
+    white 0% calc(var(--x) * 1%),  /* Белый цвет для выполненного прогресса */
+    #484848 calc(var(--x) * 1%) 100%  /* Серый цвет для оставшейся части */
+  );
+  padding: round(15%, 1px);
+  border-radius: 50%;
+  mask: conic-gradient(#0000 0 0) subtract content-box,
+    conic-gradient(#000 calc(1% * var(--y) * var(--x)), #0000 0);
+}
+@keyframes x {
+  to {
+    --x: 0;
+  }
+}
+@keyframes y {
+  0% {
+    --y: 0;
+  }
+}
+
+.taskWidgetText {
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #fff;
+  padding-top: 40px;
+  font-weight: 500;
+}
+
+.taskWidgetHeader {
+  font-weight: 700;
+}
+
+.statisticPage__container {
+  width: 100%;
+  padding: 40px 45px;
+}
+.weekProgressWidget table {
+  background-color: #fff;
+  border-radius: 20px;
+  width: 100%;
+  padding: 20px 25px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.weekProgressWidget table thead tr {
+  border-radius: 8px;
+  width: 100%;
+  background-color: #000;
+  color: white;
+  height: 45px;
+}
+
+.weekProgressWidget table thead tr:first-child th:first-child {
+  border-top-left-radius: 8px; 
+  border-bottom-left-radius: 8px; 
+}
+
+.weekProgressWidget table thead tr:first-child th:last-child {
+  border-top-right-radius: 8px; 
+  border-bottom-right-radius: 8px;
+}
+
 .weekProgressWidget table * {
-  border: 1px solid black;
-  border-collapse: collapse;
-  padding: 5px;
-  text-align: center; 
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  text-align: center;
 }

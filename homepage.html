@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Nunito:wght@200..1000&family=Rubik:wght@300..900&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="nav-container">
+      <nav class="nav-menu">
+        <button class="nav-menu__homePage"><a href="homepage.html">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M38.5714 19.8286C38.5743 19.432 38.4943 19.0392 38.3369 18.6752C38.1794 18.3112 37.948 17.984 37.6572 17.7143L20.0001 1.42859L2.34294 17.7143C2.05215 17.984 1.82069 18.3112 1.66328 18.6752C1.50587 19.0392 1.42597 19.432 1.42865 19.8286V35.7143C1.42865 36.472 1.72967 37.1989 2.26549 37.7346C2.80131 38.2703 3.52805 38.5714 4.28579 38.5714H35.7143C36.472 38.5714 37.1989 38.2703 37.7346 37.7346C38.2706 37.1989 38.5714 36.472 38.5714 35.7143V19.8286Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M20 38.5715V27.1429" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a></button>
+        <button class="nav-menu__statisticPage"><a href="statistic.html">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.42859 1.42859V38.5714H38.5714" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10 18.5715L17.1429 25.7143L28.5714 8.57147L38.5714 15.7143" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a></button>
+      </nav>
+    </div>
+    <h1 class="dateHeading"></h1>
+    <div class="container">
+      <div class="tasksContainer"></div>
+      <div class="rightContainer">
+        <div class="taskAdding">
+          <input type="text" class="inputAddTask" placeholder="Add new task" />
+          <button class="buttonAddTask">Add new task</button>
+        </div>
+        <div class="taskWidget">
+          <progress class="tasksCompletedProgress"></progress>
+          <div class="taskWidgetText"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="homepage.js"></script>
+  </body>
+</html>
