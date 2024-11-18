@@ -1,17 +1,3 @@
-body {
-  background: #d9d9d9;
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-:root {
-  --font-family: "Inter", sans-serif;
-  --second-family: "Nunito", sans-serif;
-  --third-family: "Rubik", sans-serif;
-}
-
 .nav-container {
   position: relative;
 }
@@ -39,8 +25,6 @@ body {
   background: #3c3c3c;
 }
 .dateHeading {
-  margin-top: 40px;
-  margin-left: 45px;
   margin-bottom: 25px;
   font-family: var(--font-family);
   font-weight: 700;
@@ -51,7 +35,6 @@ body {
   display: flex;
   width: 100%;
   gap: 40px;
-  margin-left: 45px;
 }
 .tasksContainer {
   background: #fff;
@@ -258,42 +241,4 @@ body {
 
 .taskWidgetHeader {
   font-weight: 700;
-}
-
-.statisticPage__container {
-  width: 100%;
-  padding: 40px 45px;
-}
-.weekProgressWidget table {
-  background-color: #fff;
-  border-radius: 20px;
-  width: 100%;
-  padding: 20px 25px;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
-.weekProgressWidget table thead tr {
-  border-radius: 8px;
-  width: 100%;
-  background-color: #000;
-  color: white;
-  height: 45px;
-}
-
-.weekProgressWidget table thead tr:first-child th:first-child {
-  border-top-left-radius: 8px; 
-  border-bottom-left-radius: 8px; 
-}
-
-.weekProgressWidget table thead tr:first-child th:last-child {
-  border-top-right-radius: 8px; 
-  border-bottom-right-radius: 8px;
-}
-
-.weekProgressWidget table * {
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 24px;
-  text-align: center;
 }

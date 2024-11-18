@@ -1,4 +1,4 @@
-import { today, list } from "./script.js";
+import { today, todayDate, list } from "./script.js";
 
 const weekProgressWidget = document.querySelector(".weekProgressWidget");
 const weekProgressTable = document.createElement("table");
@@ -12,7 +12,7 @@ function renderWeekProgressWidget() {
 
   //функция для создания ячеек таблицы
 
-  function tableCells(cellType, rowVar, listItem) {
+  function renderTableCells(cellType, rowVar, listItem) {
     const date = new Date(today);
 
     for (let i = 6; i >= 0; i--) {
@@ -51,7 +51,7 @@ function renderWeekProgressWidget() {
 
   //след столбцы для дат
 
-  thead.append(tableCells("th", headerRow));
+  thead.append(renderTableCells("th", headerRow));
   weekProgressTable.append(thead);
 
   // тело таблицы
@@ -71,11 +71,69 @@ function renderWeekProgressWidget() {
 
       //след столбцы для дат
 
-      tbody.append(tableCells("td", taskRow, listItem));
+      tbody.append(renderTableCells("td", taskRow, listItem));
     }
   });
   weekProgressTable.append(tbody);
+  weekProgressWidget.append(weekProgressTable);
 }
 
-weekProgressWidget.append(weekProgressTable);
 renderWeekProgressWidget();
+
+const currentStrikeHeader = document.querySelector(".currentStrikeHeader");
+const longestStrikeHeader = document.querySelector(".longestStrikeHeader");
+
+function renderStrikeWidget() {
+  currentStrikeHeader.innerText = "";
+  longestStrikeHeader.innerText = "";
+
+  const allCompletedDates = [];
+
+  list.forEach(listItem => {
+    if (!listItem.isDeleted) {
+      allCompletedDates.push(...listItem.completedDates);
+    }
+  });
+
+  function parseDate(dateString) {
+    const [day, month, year] = dateString.split('.').map(Number);
+    return new Date(year, month - 1, day);
+  }
+  
+  allCompletedDates.sort((a, b) => parseDate(a) - parseDate(b))
+  const uniqueCompletedDates = [...new Set(allCompletedDates)];
+
+  const strikeDateArray = [];
+  let currentStrike = 0;
+  let longestStrike = 0;
+
+  uniqueCompletedDates.forEach(date => {
+    if (list.every(listItem => !listItem.isDeleted && listItem.completedDates.includes(date))) {
+      strikeDateArray.push(date);
+      
+      if (strikeDateArray.length === 1) {
+        currentStrike = 1;
+      } else {
+        const prevDate = parseDate(strikeDateArray[strikeDateArray.length - 2]); 
+        const currDate = parseDate(date);
+
+        if ((currDate - prevDate) / (1000 * 60 * 60 * 24) === 1) {
+          currentStrike++;
+          longestStrike = Math.max(longestStrike, currentStrike);
+        } else {
+          currentStrike = 1;
+        }
+      }
+    }
+  });
+
+  if (!strikeDateArray.includes(todayDate)) {
+    currentStrike = 0;
+  };
+
+  currentStrikeHeader.innerText = currentStrike + (currentStrike <= 1 ? " Day" : " Days");
+  longestStrikeHeader.innerText = longestStrike + (longestStrike <= 1 ? " Day" : " Days");
+}
+
+renderStrikeWidget();
+
