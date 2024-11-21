@@ -75,12 +75,13 @@ function renderList() {
 
 // виджет выполненных задач
 
-const taskWidgetText = document.querySelector(".taskWidgetText");
 const tasksCompletedProgress = document.querySelector(
   ".tasksCompletedProgress"
 );
 
 function renderTaskWidget() {
+  const taskWidgetText = document.querySelector(".taskWidgetText");
+
   let countTasks = 0;
   let countCompletedTasks = 0;
 
@@ -93,15 +94,29 @@ function renderTaskWidget() {
     }
   });
 
-  // актуализация виджета
+  //отрисовка прогресса
+
+  const circle = document.querySelector(".taskWidgetProgressRing__circle");
+  const text = document.querySelector(".taskWidgetProgressRing__text");
+
+  const radius = circle.r.baseVal.value; // Радиус круга
+  const circumference = 2 * Math.PI * radius; // Окружность круга
+
+  circle.style.strokeDasharray = circumference; // Устанавливаем длину линии
+  const offset =
+    circumference - (countCompletedTasks / countTasks) * circumference; // Смещение для текущего процента
+  circle.style.strokeDashoffset = offset; // Устанавливаем смещение
+
+  text.textContent = `${
+    Math.round((countCompletedTasks / countTasks) * 100) || 0
+  }%`;
+
+  // актуализация текста виджета
 
   taskWidgetText.innerHTML = `<h3 class="taskWidgetHeader">${countCompletedTasks} of ${countTasks} ${
     countCompletedTasks > 1 ? "tasks" : "task"
   }</h3>
     <p>completed today</p>`;
-
-  tasksCompletedProgress.max = countTasks;
-  tasksCompletedProgress.value = countCompletedTasks;
 }
 
 //функция для обновления страницы

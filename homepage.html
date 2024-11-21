@@ -75,7 +75,25 @@
           <button class="buttonAddTask">Add new task</button>
         </div>
         <div class="taskWidget">
-          <progress class="tasksCompletedProgress"></progress>
+          <div class="taskWidgetProgressRing">
+            <svg class="taskWidgetProgressRing__svg" width="130" height="130">
+              <circle
+                class="taskWidgetProgressRing__background"
+                cx="65"
+                cy="65"
+                r="57"
+                stroke-width="16"
+              />
+              <circle
+                class="taskWidgetProgressRing__circle"
+                cx="65"
+                cy="65"
+                r="57"
+                stroke-width="16"
+              />
+            </svg>
+            <div class="taskWidgetProgressRing__text"></div>
+          </div>
           <div class="taskWidgetText"></div>
         </div>
       </div>

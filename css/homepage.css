@@ -164,75 +164,6 @@
   gap: 40px;
   padding-left: 50px;
 }
-/* кольцо прогресса */
-
-@property --x {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 100;
-}
-@property --y {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 1;
-}
-.tasksCompletedProgress {
-  width: 130px;
-  height: 130px;
-  appearance: none;
-  position: relative;
-  animation: y 2s 0.5s both;
-  timeline-scope: --progress;
-  align-self: center;
-}
-.tasksCompletedProgress::-webkit-progress-bar {
-  overflow: auto;
-  visibility: hidden;
-}
-.tasksCompletedProgress::-webkit-progress-value {
-  view-timeline: --progress inline;
-}
-.tasksCompletedProgress::before,
-.tasksCompletedProgress::after {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  animation: x linear;
-  animation-timeline: --progress;
-  animation-range: entry 100% exit 100%;
-}
-.tasksCompletedProgress::before {
-  content: counter(val) "%";
-  counter-reset: val calc(var(--y) * var(--x));
-  display: grid;
-  place-content: center;
-  font-family: var(--second-family);
-  font-weight: 700;
-  font-size: 21px;
-  color: #fff;
-}
-.tasksCompletedProgress::after {
-  content: "";
-  background: conic-gradient(
-    white 0% calc(var(--x) * 1%),
-    /* Белый цвет для выполненного прогресса */ #484848 calc(var(--x) * 1%) 100%
-      /* Серый цвет для оставшейся части */
-  );
-  padding: round(15%, 1px);
-  border-radius: 50%;
-  mask: conic-gradient(#0000 0 0) subtract content-box,
-    conic-gradient(#000 calc(1% * var(--y) * var(--x)), #0000 0);
-}
-@keyframes x {
-  to {
-    --x: 0;
-  }
-}
-@keyframes y {
-  0% {
-    --y: 0;
-  }
-}
 
 .taskWidgetText {
   font-family: var(--second-family);
@@ -245,4 +176,40 @@
 
 .taskWidgetHeader {
   font-weight: 700;
+}
+
+/* кольцо прогресса */
+
+.taskWidgetProgressRing {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 130px;
+  position: relative;
+}
+
+.taskWidgetProgressRing__svg {
+  transform: rotate(-90deg); /* чтобы кольцо начиналось сверху */
+  overflow: visible;
+}
+.taskWidgetProgressRing__background {
+  fill: none;
+  stroke: #484848; /* серый цвет для фона */
+}
+.taskWidgetProgressRing__circle {
+  fill: none; /* Убираем заливку */
+  stroke: white; /* Цвет прогресса */
+  stroke-dashoffset: 358.142; /* Начальное значение (100%) */
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+.taskWidgetProgressRing__text {
+  position: absolute;
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 21px;
+  color: #fff;
+  color: white;
+  text-align: center;
 }
