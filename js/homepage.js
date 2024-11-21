@@ -159,12 +159,19 @@ buttonAddTask.addEventListener("click", addItem);
 //удаление задач
 
 function deleteItem(event) {
-  const idDeletedTask = list.findIndex(
-    (task) => task.id === Number(this.event.target.id)
-  );
-  list[idDeletedTask].isDeleted = true;
+  // делегирую событие на ближайшего родителя button Методом elem.closest(css)
+  const button = event.target.closest(".buttonDeleteTask");
 
-  updateChanges();
+  if (button) {
+    const idDeletedTask = list.findIndex(
+      (task) => task.id === Number(button.id)
+    );
+
+    if (idDeletedTask !== -1) {
+      list[idDeletedTask].isDeleted = true;
+      updateChanges();
+    }
+  }
 }
 
 //изменение свойства checked у задачи

@@ -1,6 +1,6 @@
-export let today = new Date();
+const today = new Date();
 
-export let todayDate = today.toLocaleDateString();
+const todayDate = today.toLocaleDateString();
 
 let list;
 
@@ -11,5 +11,4 @@ try {
   list = [];
 }
 
-export { list };
-
+export { list, today, todayDate };

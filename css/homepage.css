@@ -34,12 +34,12 @@
 .container {
   display: flex;
   width: 100%;
-  gap: 40px;
+  gap: 2%;
 }
 .tasksContainer {
   background: #fff;
   border-radius: 20px;
-  width: 750px;
+  width: 54%;
   padding: 40px 35px;
   font-family: var(--font-family);
   font-weight: 400;
@@ -85,7 +85,7 @@
   background: #333;
 }
 .checkboxInput:checked::after {
-  content: '✔';
+  content: "✔";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -111,10 +111,10 @@
   cursor: pointer;
 }
 .buttonDeleteTask:hover {
-  border: 1px solid  #686868;
+  border: 1px solid #686868;
 }
 .rightContainer {
-  width: 600px;
+  width: 44%;
   flex-shrink: 1;
 }
 .taskAdding {
@@ -128,7 +128,8 @@
 }
 .inputAddTask {
   border-radius: 20px;
-  width: 565px;
+  width: 95%;
+  margin: auto;
   height: 60px;
   background: #e9e7e7;
   padding: 15px 20px;
@@ -141,7 +142,8 @@
 }
 .buttonAddTask {
   border-radius: 20px;
-  width: 565px;
+  width: 95%;
+  margin: auto;
   height: 60px;
   border: none;
   background: #c3c3c3;
@@ -151,20 +153,21 @@
   color: #000;
 }
 .taskWidget {
-  width: 600px; 
-  height: 190px; 
+  width: 100%;
+  height: 190px;
   border-radius: 20px;
-  background: url('data:image/svg+xml,%3Csvg%20width%3D%22600%22%20height%3D%22190%22%20viewBox%3D%220%200%20600%20190%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22599.372%22%20height%3D%22190%22%20rx%3D%227%22%20fill%3D%22%23686868%22%20%2F%3E%3Cpath%20d%3D%22M375.2%2086.4372C623.33%2086.4372%20599.372%2006%20599.372%2006V183C599.372%20186.866%20596.238%20190%20592.372%20190H86C86%20190%20127.07%2086.4372%20375.2%2086.4372Z%22%20fill%3D%22%23414141%22%20fill-opacity%3D%220.59%22%20%2F%3E%3Cpath%20d%3D%22M291.124%2055.291C539.435%2055.291%20599.372%2006.03174%20599.372%2006.03174V183C599.372%20186.866%20596.238%20190%20592.372%20190H85.6246C85.6246%20190%20042.8123%2055.291%20291.124%2055.291Z%22%20fill%3D%22%23797979%22%20fill-opacity%3D%220.59%22%20%2F%3E%3C%2Fsvg%3E');
-  background-size: cover; 
+  background: url("data:image/svg+xml,%3Csvg%20width%3D%22600%22%20height%3D%22190%22%20viewBox%3D%220%200%20600%20190%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22599.372%22%20height%3D%22190%22%20rx%3D%227%22%20fill%3D%22%23686868%22%20%2F%3E%3Cpath%20d%3D%22M375.2%2086.4372C623.33%2086.4372%20599.372%2006%20599.372%2006V183C599.372%20186.866%20596.238%20190%20592.372%20190H86C86%20190%20127.07%2086.4372%20375.2%2086.4372Z%22%20fill%3D%22%23414141%22%20fill-opacity%3D%220.59%22%20%2F%3E%3Cpath%20d%3D%22M291.124%2055.291C539.435%2055.291%20599.372%2006.03174%20599.372%2006.03174V183C599.372%20186.866%20596.238%20190%20592.372%20190H85.6246C85.6246%20190%20042.8123%2055.291%20291.124%2055.291Z%22%20fill%3D%22%23797979%22%20fill-opacity%3D%220.59%22%20%2F%3E%3C%2Fsvg%3E");
+  background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
   display: flex;
   gap: 40px;
   padding-left: 50px;
 }
+/* кольцо прогресса */
 
 @property --x {
-  syntax: "<integer>";
+  syntax: "<number>";
   inherits: true;
   initial-value: 100;
 }
@@ -211,8 +214,9 @@
 .tasksCompletedProgress::after {
   content: "";
   background: conic-gradient(
-    white 0% calc(var(--x) * 1%),  /* Белый цвет для выполненного прогресса */
-    #484848 calc(var(--x) * 1%) 100%  /* Серый цвет для оставшейся части */
+    white 0% calc(var(--x) * 1%),
+    /* Белый цвет для выполненного прогресса */ #484848 calc(var(--x) * 1%) 100%
+      /* Серый цвет для оставшейся части */
   );
   padding: round(15%, 1px);
   border-radius: 50%;

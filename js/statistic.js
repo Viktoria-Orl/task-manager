@@ -13,10 +13,8 @@ function renderWeekProgressWidget() {
   //функция для создания ячеек таблицы
 
   function renderTableCells(cellType, rowVar, listItem) {
-    const date = new Date(today);
-
     for (let i = 6; i >= 0; i--) {
-      date.setDate(today.getDate() - i);
+      const date = new Date(today - i * (24 * 60 * 60 * 1000));
 
       if (cellType === "th") {
         const dateHeaderCell = document.createElement("th");
@@ -80,6 +78,8 @@ function renderWeekProgressWidget() {
 
 renderWeekProgressWidget();
 
+// renderStrikeWidget
+
 const currentStrikeHeader = document.querySelector(".currentStrikeHeader");
 const longestStrikeHeader = document.querySelector(".longestStrikeHeader");
 
@@ -89,51 +89,111 @@ function renderStrikeWidget() {
 
   const allCompletedDates = [];
 
-  list.forEach(listItem => {
+  list.forEach((listItem) => {
     if (!listItem.isDeleted) {
       allCompletedDates.push(...listItem.completedDates);
     }
   });
 
   function parseDate(dateString) {
-    const [day, month, year] = dateString.split('.').map(Number);
+    const [day, month, year] = dateString.split(".").map(Number);
     return new Date(year, month - 1, day);
   }
-  
-  allCompletedDates.sort((a, b) => parseDate(a) - parseDate(b))
+
+  allCompletedDates.sort((a, b) => parseDate(a) - parseDate(b));
   const uniqueCompletedDates = [...new Set(allCompletedDates)];
 
   const strikeDateArray = [];
   let currentStrike = 0;
   let longestStrike = 0;
+  const activeTaskArray = list.filter((listItem) => !listItem.isDeleted);
 
-  uniqueCompletedDates.forEach(date => {
-    if (list.every(listItem => !listItem.isDeleted && listItem.completedDates.includes(date))) {
+  uniqueCompletedDates.forEach((date) => {
+    if (
+      activeTaskArray.every((listItem) =>
+        listItem.completedDates.includes(date)
+      )
+    ) {
       strikeDateArray.push(date);
-      
-      if (strikeDateArray.length === 1) {
-        currentStrike = 1;
-      } else {
-        const prevDate = parseDate(strikeDateArray[strikeDateArray.length - 2]); 
-        const currDate = parseDate(date);
+    }
 
-        if ((currDate - prevDate) / (1000 * 60 * 60 * 24) === 1) {
-          currentStrike++;
-          longestStrike = Math.max(longestStrike, currentStrike);
-        } else {
-          currentStrike = 1;
-        }
+    if (strikeDateArray.length === 1) {
+      currentStrike = 1;
+      longestStrike = 1;
+    } else {
+      const prevDate = parseDate(strikeDateArray[strikeDateArray.length - 2]);
+      const currDate = parseDate(date);
+
+      if ((currDate - prevDate) / (1000 * 60 * 60 * 24) === 1) {
+        currentStrike++;
+        longestStrike = Math.max(longestStrike, currentStrike);
+      } else {
+        currentStrike = 1;
       }
     }
   });
 
   if (!strikeDateArray.includes(todayDate)) {
     currentStrike = 0;
-  };
+  }
 
-  currentStrikeHeader.innerText = currentStrike + (currentStrike <= 1 ? " Day" : " Days");
-  longestStrikeHeader.innerText = longestStrike + (longestStrike <= 1 ? " Day" : " Days");
+  currentStrikeHeader.innerText =
+    currentStrike + (currentStrike <= 1 ? " Day" : " Days");
+  longestStrikeHeader.innerText =
+    longestStrike + (longestStrike <= 1 ? " Day" : " Days");
 }
 
 renderStrikeWidget();
 
+const targetWidgetContainer = document.querySelector(".targetWidgetContainer");
+
+function renderTargetWidget() {
+  targetWidgetContainer.innerHTML = "";
+
+  //прозожусь по списку неудаленных задач
+  list.forEach((listItem) => {
+    //проверка на наличие свостйва isDeleted: true
+    if (!listItem.isDeleted) {
+      //для каждой задачи надо посчитать completeDaysCount
+      //если массив дат выполнения содержит сегодняшнюю дату, то цикл на проверку предыдущих 6 дат
+      let completeDaysCount = 0;
+      if (listItem.completedDates.includes(todayDate)) {
+        completeDaysCount += 1;
+        //и посчитать сколько дней с убыванием . т.е.  в цикле от 1 до 6 если массив содержин дату - iдней то прибавлять
+        for (let i = 1; i <= 6; i++) {
+          const day = new Date(today - i * (24 * 60 * 60 * 1000));
+          const date = day.toLocaleDateString();
+          if (listItem.completedDates.includes(date)) {
+            completeDaysCount++;
+          }
+        }
+      }
+      const achievedTarger = completeDaysCount === 7;
+      // и отрисовать
+      //див с h3 названием задачи и с параграфом `${completeDaysCount} from 7 days target`
+      //div с отметкой выполнено если completeDaysCount = 7
+      //и в остальных случаях Unachieved - с разными классами и стилями
+      targetWidgetContainer.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="targetWidgetTaskContainer">
+          <div class="targetWidgetPercent ${achievedTarger ? "achieved" : ""}">\
+          ${Math.ceil((completeDaysCount / 7) * 100)}%
+          </div>
+          <div class="targetWidgetTaskInfo">
+            <h3 class="targetWidgetTaskName">${listItem.taskName}</h3>
+            <p class="targetWidgetTaskText">${completeDaysCount} from 7 days target</p>
+          </div>
+          <div class="targetWidgetAchievedStatus ${
+            achievedTarger ? "achieved" : ""
+          }">
+          ${achievedTarger ? "Achieved" : "Unachieved"}
+          </div>
+        </div>
+      `
+      );
+    }
+  });
+}
+
+renderTargetWidget();
