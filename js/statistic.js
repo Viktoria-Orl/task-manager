@@ -138,9 +138,9 @@ function renderStrikeWidget() {
   }
 
   currentStrikeHeader.innerText =
-    currentStrike + (currentStrike <= 1 ? " Day" : " Days");
+    currentStrike + (currentStrike === 1 ? " Day" : " Days");
   longestStrikeHeader.innerText =
-    longestStrike + (longestStrike <= 1 ? " Day" : " Days");
+    longestStrike + (longestStrike === 1 ? " Day" : " Days");
 }
 
 renderStrikeWidget();
@@ -155,19 +155,17 @@ function renderTargetWidget() {
     //проверка на наличие свостйва isDeleted: true
     if (!listItem.isDeleted) {
       //для каждой задачи надо посчитать completeDaysCount
-      //если массив дат выполнения содержит сегодняшнюю дату, то цикл на проверку предыдущих 6 дат
       let completeDaysCount = 0;
-      if (listItem.completedDates.includes(todayDate)) {
-        completeDaysCount += 1;
-        //и посчитать сколько дней с убыванием . т.е.  в цикле от 1 до 6 если массив содержин дату - iдней то прибавлять
-        for (let i = 1; i <= 6; i++) {
-          const day = new Date(today - i * (24 * 60 * 60 * 1000));
-          const date = day.toLocaleDateString();
-          if (listItem.completedDates.includes(date)) {
-            completeDaysCount++;
-          }
+
+      // цикл на проверку 7 последних дней
+      for (let i = 0; i <= 6; i++) {
+        const day = new Date(today - i * 24 * 60 * 60 * 1000);
+        const date = day.toLocaleDateString();
+        if (listItem.completedDates.includes(date)) {
+          completeDaysCount += 1;
         }
       }
+
       const achievedTarger = completeDaysCount === 7;
       // и отрисовать
       //див с h3 названием задачи и с параграфом `${completeDaysCount} from 7 days target`
