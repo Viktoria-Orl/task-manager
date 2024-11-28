@@ -44,38 +44,18 @@
         </button>
       </nav>
     </div>
-    <h1 class="dateHeading"></h1>
-    <div class="container">
-      <div class="tasksContainer"></div>
-      <div class="rightContainer">
-        <div class="taskAdding">
-          <input type="text" class="inputAddTask" placeholder="Add new task" />
-          <button class="buttonAddTask">Add new task</button>
+    <div class="statisticPageContainer">
+      <div class="weekProgressWidget"></div>
+      <div class="secondContainer">
+        <div class="strikeWidget">
+          <h2 class="currentStrikeHeader">0 Days</h2>
+          <p class="currentStrikeText">Your current strike</p>
+          <h3 class="longestStrikeHeader">0 Days</h3>
+          <p class="longestStrikeText">Your longest strike</p>
         </div>
-        <div class="taskWidget">
-          <div class="taskWidgetProgressRing">
-            <svg class="taskWidgetProgressRing__svg" width="130" height="130">
-              <circle
-                class="taskWidgetProgressRing__background"
-                cx="65"
-                cy="65"
-                r="57"
-                stroke-width="16"
-              />
-              <circle
-                class="taskWidgetProgressRing__circle"
-                cx="65"
-                cy="65"
-                r="57"
-                stroke-width="16"
-              />
-            </svg>
-            <div class="taskWidgetProgressRing__text"></div>
-          </div>
-          <div class="taskWidgetText"></div>
-        </div>
+        <div class="targetWidgetContainer"></div>
       </div>
     </div>
-    <script type="module" src="js/homepage.js"></script>
+    <script type="module" src="js/statistic.js"></script>
   </body>
 </html>

@@ -1,0 +1,17 @@
+@import url(homepage.css);
+@import url(statistic.css);
+
+body {
+  background: #d9d9d9;
+  padding: 40px;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --font-family: "Inter", sans-serif;
+  --second-family: "Nunito", sans-serif;
+  --third-family: "Rubik", sans-serif;
+}

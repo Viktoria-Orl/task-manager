@@ -1,0 +1,215 @@
+.nav-container {
+  position: relative;
+}
+
+.nav-menu {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 45px;
+  border-radius: 20px;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.25);
+  width: 250px;
+  height: 80px;
+  background: #fff;
+}
+
+.nav-menu > button {
+  border-radius: 20px;
+  width: 65px;
+  height: 65px;
+  background: #3c3c3c;
+}
+.dateHeading {
+  margin-bottom: 25px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 36px;
+  color: #000;
+}
+.container {
+  display: flex;
+  width: 100%;
+  gap: 2%;
+}
+.tasksContainer {
+  background: #fff;
+  border-radius: 20px;
+  width: 54%;
+  padding: 40px 35px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  color: #000;
+}
+.tasksContainer > ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+}
+.taskItem {
+  display: flex;
+  cursor: pointer;
+  padding-bottom: 10px;
+}
+.taskName {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  color: #000;
+  gap: 15px;
+  cursor: pointer;
+}
+.checkboxInput {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #b3b3b3;
+  border-radius: 100%;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+.checkboxInput:hover {
+  border: 1px solid #333;
+}
+.checkboxInput:checked {
+  background: #333;
+}
+.checkboxInput:checked::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 150%;
+  text-align: center;
+  color: #fff;
+}
+.completed {
+  text-decoration: line-through;
+  color: #b3b3b3;
+}
+.buttonDeleteTask {
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  background: #fff;
+  cursor: pointer;
+}
+.buttonDeleteTask:hover {
+  border: 1px solid #686868;
+}
+.rightContainer {
+  width: 44%;
+  flex-shrink: 1;
+}
+.taskAdding {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px 16px;
+  border: 0px;
+  margin-bottom: 34px;
+}
+.inputAddTask {
+  border-radius: 20px;
+  width: 95%;
+  margin: auto;
+  height: 60px;
+  background: #e9e7e7;
+  padding: 15px 20px;
+  border: none;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.49);
+  margin-bottom: 18px;
+}
+.buttonAddTask {
+  border-radius: 20px;
+  width: 95%;
+  margin: auto;
+  height: 60px;
+  border: none;
+  background: #c3c3c3;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 24px;
+  color: #000;
+}
+.taskWidget {
+  width: 100%;
+  height: 190px;
+  border-radius: 20px;
+  background: url("data:image/svg+xml,%3Csvg%20width%3D%22600%22%20height%3D%22190%22%20viewBox%3D%220%200%20600%20190%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22599.372%22%20height%3D%22190%22%20rx%3D%227%22%20fill%3D%22%23686868%22%20%2F%3E%3Cpath%20d%3D%22M375.2%2086.4372C623.33%2086.4372%20599.372%2006%20599.372%2006V183C599.372%20186.866%20596.238%20190%20592.372%20190H86C86%20190%20127.07%2086.4372%20375.2%2086.4372Z%22%20fill%3D%22%23414141%22%20fill-opacity%3D%220.59%22%20%2F%3E%3Cpath%20d%3D%22M291.124%2055.291C539.435%2055.291%20599.372%2006.03174%20599.372%2006.03174V183C599.372%20186.866%20596.238%20190%20592.372%20190H85.6246C85.6246%20190%20042.8123%2055.291%20291.124%2055.291Z%22%20fill%3D%22%23797979%22%20fill-opacity%3D%220.59%22%20%2F%3E%3C%2Fsvg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  display: flex;
+  gap: 40px;
+  padding-left: 50px;
+}
+
+.taskWidgetText {
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 25px;
+  color: #fff;
+  padding-top: 40px;
+  font-weight: 500;
+}
+
+.taskWidgetHeader {
+  font-weight: 700;
+}
+
+/* кольцо прогресса */
+
+.taskWidgetProgressRing {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 130px;
+  position: relative;
+}
+
+.taskWidgetProgressRing__svg {
+  transform: rotate(-90deg); /* чтобы кольцо начиналось сверху */
+  overflow: visible;
+}
+.taskWidgetProgressRing__background {
+  fill: none;
+  stroke: #484848; /* серый цвет для фона */
+}
+.taskWidgetProgressRing__circle {
+  fill: none; /* Убираем заливку */
+  stroke: white; /* Цвет прогресса */
+  stroke-dashoffset: 358.142; /* Начальное значение (100%) */
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+.taskWidgetProgressRing__text {
+  position: absolute;
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 21px;
+  color: #fff;
+  color: white;
+  text-align: center;
+}
