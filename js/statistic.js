@@ -120,7 +120,7 @@ function renderStrikeWidget() {
     if (strikeDateArray.length === 1) {
       currentStrike = 1;
       longestStrike = 1;
-    } else {
+    } else if (strikeDateArray.length > 1) {
       const prevDate = parseDate(strikeDateArray[strikeDateArray.length - 2]);
       const currDate = parseDate(date);
 
